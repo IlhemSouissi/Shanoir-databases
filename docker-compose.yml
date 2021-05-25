@@ -1,0 +1,28 @@
+
+version: '3'
+services:
+  keycloak-database:
+    container_name: "shanoir-keycloak-database"
+    build: ./keycloak-database
+    environment:
+      - MYSQL_DATABASE=keycloak
+    volumes:
+      - "keycloak-database-data:/var/lib/mysql"
+    restart: always
+    ports:
+      - "3307:3306"
+
+  database:
+    container_name: "shanoir-ms-database"
+    build: ./database
+    env_file:
+      - ./variables.env
+    volumes:
+      - "database-data:/var/lib/mysql"
+    restart: always 	
+    ports:
+     - "3306:3306"
+
+volumes:
+  keycloak-database-data:
+  database-data:
